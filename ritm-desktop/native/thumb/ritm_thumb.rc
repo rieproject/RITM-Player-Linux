@@ -1,0 +1,5 @@
+// Resource logo RITM resmi (PNG transparan dari logo-ritm-audio-package).
+// 101: logo hitam, dipakai untuk cover terang.
+// 102: logo putih, dipakai untuk cover gelap.
+101 RCDATA "res/logo-on-bright.png"
+102 RCDATA "res/logo-on-dark.png"

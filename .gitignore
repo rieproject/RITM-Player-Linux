@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+ritm-desktop/dist/
+ritm-desktop/release/
+ritm-desktop/native/build/
+release-web/
+
+# Logs & temp
+*.log
+.DS_Store

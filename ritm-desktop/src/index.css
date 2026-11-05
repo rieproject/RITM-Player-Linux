@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+
+/* komponen @ritm/player (latar visual) memakai kelas Tailwind — ikut dipindai */
+@source '../../ritm-player/src';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --color-accent: #f59e0b;
+}
+
+@layer base {
+  html {
+    @apply bg-neutral-50 text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  ::selection {
+    @apply bg-accent/30;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
+  }
+  input[type='color'] {
+    -webkit-appearance: none;
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  input[type='color']::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  input[type='color']::-webkit-color-swatch {
+    border: none;
+    border-radius: 9999px;
+  }
+  input[type='color']::-moz-color-swatch {
+    border: none;
+    border-radius: 9999px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-full bg-neutral-900 px-5 text-sm font-semibold text-white
+      transition-transform active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 dark:bg-white dark:text-neutral-900;
+  }
+  .field {
+    @apply h-10 w-full rounded-lg border border-neutral-200 bg-white px-3 text-sm placeholder:text-neutral-400 transition-colors
+      hover:border-neutral-300 focus:border-neutral-400 focus:outline-none
+      dark:border-neutral-800 dark:bg-neutral-900 dark:placeholder:text-neutral-600 dark:hover:border-neutral-700 dark:focus:border-neutral-600;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium text-neutral-500 dark:text-neutral-400;
+  }
+  .btn-ghost {
+    @apply inline-flex h-9 items-center justify-center rounded-lg px-3 text-sm font-medium text-neutral-600 transition-colors
+      hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-900 dark:hover:text-neutral-100;
+  }
+  .btn-icon {
+    @apply inline-flex size-8 shrink-0 items-center justify-center rounded-full text-neutral-500 transition-colors
+      hover:bg-neutral-100 hover:text-neutral-900 disabled:pointer-events-none disabled:opacity-30
+      dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100;
+  }
+  .badge {
+    @apply inline-flex h-5 items-center rounded-full bg-neutral-100 px-2 text-[10px] font-semibold tracking-wide text-neutral-600
+      tabular-nums dark:bg-neutral-800 dark:text-neutral-300;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

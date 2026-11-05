@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "paths": {
+      "@ritm/player": ["../ritm-player/src"],
+      "@ritm/player/*": ["../ritm-player/src/*"]
+    }
+  },
+  "include": ["src"]
+}

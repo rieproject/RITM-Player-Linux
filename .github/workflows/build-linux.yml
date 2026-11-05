@@ -1,0 +1,55 @@
+name: Build Linux Packages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install System Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm libasound2-dev libpipewire-0.3-dev
+
+      - name: Install Node Dependencies
+        run: npm ci || npm install
+
+      - name: Build Native Audio Engine (ALSA & PipeWire)
+        run: |
+          cd ritm-desktop
+          sh native/scripts/build-linux.sh
+
+      - name: Build React / Vite Frontend
+        run: |
+          cd ritm-desktop
+          npm run build
+
+      - name: Package Linux Installers (AppImage, RPM, DEB, tar.gz)
+        run: |
+          cd ritm-desktop
+          npx electron-builder --linux AppImage rpm deb tar.gz
+
+      - name: Upload Linux Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: RITM-Player-Linux
+          path: |
+            ritm-desktop/release/*.AppImage
+            ritm-desktop/release/*.rpm
+            ritm-desktop/release/*.deb
+            ritm-desktop/release/*.tar.gz

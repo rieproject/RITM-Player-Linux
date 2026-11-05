@@ -1,0 +1,101 @@
+{
+  "name": "@ritm/desktop-linux",
+  "productName": "RITM Player",
+  "version": "1.0.0",
+  "description": "High-fidelity .ritm audio player for Linux with native ALSA and PipeWire support",
+  "homepage": "https://github.com/rieproject/RITM-Player-Linux",
+  "author": "Arie Jakawiguna <arieee.project@gmail.com>",
+  "private": true,
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json && vite build",
+    "start": "npm run build && electron .",
+    "dist": "npm run build && electron-builder --linux",
+    "dist:appimage": "npm run build && electron-builder --linux AppImage",
+    "dist:rpm": "npm run build && electron-builder --linux rpm",
+    "dist:deb": "npm run build && electron-builder --linux deb",
+    "dist:tar": "npm run build && electron-builder --linux tar.gz",
+    "dist:dir": "npm run build && electron-builder --linux --dir",
+    "typecheck": "tsc -p tsconfig.json",
+    "native:linux": "sh native/scripts/build-linux.sh",
+    "native:test": "sh native/scripts/build-linux.sh && ./native/build/dsp_test"
+  },
+  "devDependencies": {
+    "@fontsource-variable/inter": "^5.1.0",
+    "@ritm/player": "*",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "electron": "45.2.3",
+    "electron-builder": "^26.18.0",
+    "lucide-react": "^0.460.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^6.0.0"
+  },
+  "build": {
+    "appId": "id.rieproject.ritm.player",
+    "productName": "RITM Player",
+    "copyright": "© rieproject.id | Arie Jakawiguna",
+    "electronVersion": "45.2.3",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "build/icon.png",
+      "package.json"
+    ],
+    "asar": true,
+    "fileAssociations": [
+      {
+        "ext": "ritm",
+        "name": "RITM Release",
+        "description": "Rilisan musik RITM",
+        "mimeType": "application/vnd.ritm+zip",
+        "icon": "build/icon.png",
+        "role": "Viewer"
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "rpm",
+        "deb",
+        "tar.gz"
+      ],
+      "artifactName": "RITM-Player-${version}.${ext}",
+      "icon": "build/icons",
+      "maintainer": "Arie Jakawiguna <arieee.project@gmail.com>",
+      "category": "Audio",
+      "executableName": "ritm-player",
+      "synopsis": "Bit-perfect player for .ritm music releases",
+      "description": "High-fidelity audio player for .ritm albums and music files with native ALSA and PipeWire support.",
+      "extraResources": [
+        {
+          "from": "native/bin/linux-x64",
+          "to": "native",
+          "filter": [
+            "ritm-audio"
+          ]
+        }
+      ]
+    },
+    "appImage": {
+      "artifactName": "RITM-Player-${version}.${ext}"
+    },
+    "rpm": {
+      "packageName": "ritm-player",
+      "artifactName": "RITM-Player-${version}.${ext}"
+    },
+    "deb": {
+      "packageName": "ritm-player",
+      "artifactName": "RITM-Player-${version}.${ext}"
+    }
+  }
+}
